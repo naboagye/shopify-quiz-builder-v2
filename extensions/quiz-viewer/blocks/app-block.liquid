@@ -1,0 +1,16 @@
+{% render "quiz-page" with block.settings.quiz_id as quiz_id %}
+{% schema %}
+  {
+    "name": "Quiz",
+    "target": "section",
+    "stylesheet": "quiz.css",
+    "javascript": "product-quiz.js",
+    "settings": [
+        {
+        "type": "text",
+        "id": "quiz_id",
+        "label": "Quiz ID"
+       }
+    ]
+  }
+{% endschema %}
