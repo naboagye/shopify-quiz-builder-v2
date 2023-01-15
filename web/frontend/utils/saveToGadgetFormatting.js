@@ -5,7 +5,10 @@ export const formatQuizQuestions = (questionInput) => {
       // handle image upload
       let image = null;
       const recommendedProductImage = a.recommendedProduct.image;
-      if (recommendedProductImage?.file?.name && recommendedProductImage?.token) {
+      if (
+        recommendedProductImage?.file?.name &&
+        recommendedProductImage?.token
+      ) {
         image = {
           directUploadToken: recommendedProductImage.token,
           fileName: recommendedProductImage.file.name,
@@ -50,6 +53,7 @@ export const formatQuizQuestions = (questionInput) => {
           update: {
             id: q.id,
             text: q.question,
+            limit: q.limit,
             answers,
           },
         }
@@ -57,6 +61,7 @@ export const formatQuizQuestions = (questionInput) => {
         {
           create: {
             text: q.question,
+            limit: q.limit,
             answers,
           },
         };

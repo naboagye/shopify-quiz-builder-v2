@@ -32,6 +32,7 @@ export default function QuizEditorPage() {
           node: {
             id: true,
             text: true,
+            limit: true,
             answers: {
               edges: {
                 node: {
@@ -65,6 +66,7 @@ export default function QuizEditorPage() {
       deletedAnswerIds
     ) => {
       const questions = formatQuizQuestions(questionInput);
+      console.log(questions);
 
       const quiz = {
         title: quizName,
@@ -120,6 +122,7 @@ export default function QuizEditorPage() {
     const questions = data.questions.edges.map((question) => ({
       id: question.node.id,
       question: question.node.text,
+      limit: question.node.limit,
       answers: question.node.answers.edges.map((answer) => ({
         id: answer.node.id,
         answer: answer.node.text,

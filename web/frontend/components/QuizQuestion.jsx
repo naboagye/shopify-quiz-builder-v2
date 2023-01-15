@@ -1,6 +1,13 @@
-import { TextField, Card, Button, Stack, Icon } from "@shopify/polaris";
+import {
+  TextField,
+  Card,
+  Button,
+  Stack,
+  Icon,
+  Checkbox,
+} from "@shopify/polaris";
 import { CirclePlusMajor } from "@shopify/polaris-icons";
-import { useCallback } from "react";
+import { useState, useCallback } from "react";
 import { QuestionAnswer } from "./QuestionAnswer";
 
 export function QuizQuestion({
@@ -19,11 +26,26 @@ export function QuizQuestion({
     updateQuestion(index, { ...question, question: q });
   });
 
+  const updateQuestionLimit = useCallback((l) => {
+    updateQuestion(index, { ...question, limit: l });
+    console.log(l);
+  });
+
   const updateAnswer = useCallback((answerIndex, answer) => {
     const answers = [...question.answers];
     answers[answerIndex] = answer;
     updateQuestion(index, { ...question, answers });
   });
+
+  const [checked, setChecked] = useState(question.limit > 1);
+  const handleChange = (newChecked) => {
+    setChecked(newChecked);
+  };
+
+  const [limit, setLimit] = useState("");
+  const handleSetLimit = (value) => {
+    setLimit(value);
+  };
 
   return (
     <Card sectioned subdued>
@@ -49,6 +71,24 @@ export function QuizQuestion({
         </Stack>
       </Card.Section>
       <Card.Section>
+        <Checkbox
+          label="Add answer limit to question? (default is 1)"
+          checked={checked}
+          onChange={handleChange}
+        />
+        {checked && (
+          <TextField
+            requiredIndicator
+            step={1}
+            type="number"
+            autoComplete="off"
+            value={question.limit}
+            onChange={updateQuestionLimit}
+            label="Answer limit"
+          />
+        )}
+      </Card.Section>
+      <Card.Section>
         {question.answers.map((answer, i) => {
           return (
             <QuestionAnswer
@@ -56,7 +96,9 @@ export function QuizQuestion({
               answer={answer}
               index={i}
               products={products}
-              removeAnswer={(answerIndex) => removeAnswer(index, answerIndex, answer.id)}
+              removeAnswer={(answerIndex) =>
+                removeAnswer(index, answerIndex, answer.id)
+              }
               updateAnswer={(updated, answerIndex) =>
                 updateAnswer(answerIndex, updated)
               }

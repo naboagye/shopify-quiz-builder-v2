@@ -33,6 +33,7 @@ export function QuizForm({ quiz, onSave }) {
   const emptyQuestion = {
     id: "",
     question: "",
+    limit: "1",
     answers: [emptyAnswer],
   };
 
@@ -43,6 +44,7 @@ export function QuizForm({ quiz, onSave }) {
   const [questions, setQuestions] = useState(
     quiz?.questions || [emptyQuestion]
   );
+  console.log(questions);
 
   const [deletedQuestionIds, setDeletedQuestionIds] = useState([]);
 
