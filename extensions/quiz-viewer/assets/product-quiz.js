@@ -125,10 +125,9 @@ async function onSubmitHandler(evt) {
   await saveSelections(email, recommendedProducts);
 
   // display recommendations
-  let recommendedProductHTML = `<div><h2>Based on your selections, we recommend the following products</h2><div style='display: flex; overflow: auto'><slider-component class="slider-mobile-gutter page-width page-width-desktop">
-    <ul id="Slider-template--16816114368800__01eef60b-2b83-48b4-ba27-abec11e33cc2" class="grid product-grid contains-card contains-card--product contains-card--standard grid--4-col-desktop grid--2-col-tablet-down" role="list" aria-label="Slider"><li id="Slide-template--16816114368800__01eef60b-2b83-48b4-ba27-abec11e33cc2-1" class="grid__item">`;
+  let recommendedProductHTML = `<div><h2>Based on your selections, we recommend the following products</h2><div style='display: flex; overflow: auto'>`;
 
-  recommendedProducts.forEach((result) => {
+  recommendedProducts.forEach((result, i) => {
     const { recommendedProduct } = result;
     const imgUrl =
       recommendedProduct.image != null
@@ -139,10 +138,10 @@ async function onSubmitHandler(evt) {
     //   `<span style="padding: 8px 16px; margin-left: 10px; border: black 1px solid; align-items: center; display: flex; flex-direction: column"><h3>${recommendedProduct.productSuggestion.title}</h3><a class="button" href="/products/${productLink}">Check it out</a>` +
     //   recommendedProduct.productSuggestion.body +
     //   `<br/><img src=${imgUrl} width="200px" /><br /></span>`;
-    recommendedProductHTML += `<li id="Slide-template--16816114368800__01eef60b-2b83-48b4-ba27-abec11e33cc2-1" class="grid__item"> <link href="//cdn.shopify.com/s/files/1/0673/1930/0384/t/1/assets/component-rating.css?v=24573085263941240431667423995" rel="stylesheet" type="text/css" media="all" /> <div class="card-wrapper product-card-wrapper underline-links-hover"> <div class="card card--standard card--media" style="--ratio-percent: 125%"> <div class="card__inner color-background-2 gradient ratio" style="--ratio-percent: 125%" > <div class="card__media"> <div class="media media--transparent media--hover-effect"> <img srcset=" //cdn.shopify.com/s/files/1/0673/1930/0384/products/photo-1611930022073-b7a4ba5fcccd.jpg?v=1673721965&amp;width=165 165w, //cdn.shopify.com/s/files/1/0673/1930/0384/products/photo-1611930022073-b7a4ba5fcccd.jpg?v=1673721965&amp;width=360 360w, //cdn.shopify.com/s/files/1/0673/1930/0384/products/photo-1611930022073-b7a4ba5fcccd.jpg?v=1673721965&amp;width=533 533w, //cdn.shopify.com/s/files/1/0673/1930/0384/products/photo-1611930022073-b7a4ba5fcccd.jpg?v=1673721965&amp;width=720 720w, //cdn.shopify.com/s/files/1/0673/1930/0384/products/photo-1611930022073-b7a4ba5fcccd.jpg?v=1673721965&amp;width=940 940w, //cdn.shopify.com/s/files/1/0673/1930/0384/products/photo-1611930022073-b7a4ba5fcccd.jpg?v=1673721965 1000w " src=${imgUrl} sizes="(min-width: 1200px) 267px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)" alt="weathered hill" class="motion-reduce" loading="lazy" width="1000" height="1500" /> </div> </div> <div class="card__content"> <div class="card__information"> <h3 class="card__heading"> <a href="/products/${productLink}" id="StandardCardNoMediaLink-template--16816114368800__01eef60b-2b83-48b4-ba27-abec11e33cc2-7981045481760" class="full-unstyled-link" aria-labelledby="StandardCardNoMediaLink-template--16816114368800__01eef60b-2b83-48b4-ba27-abec11e33cc2-7981045481760 NoMediaStandardBadge-template--16816114368800__01eef60b-2b83-48b4-ba27-abec11e33cc2-7981045481760" > ${recommendedProduct.productSuggestion.title} </a> </h3> </div> <div class="card__badge bottom left"></div> </div> </div> <div class="card__content"> <div class="card__information"> <h3 class="card__heading h5" id="title-template--16816114368800__01eef60b-2b83-48b4-ba27-abec11e33cc2-7981045481760" > <a href="/products/${productLink}" id="CardLink-template--16816114368800__01eef60b-2b83-48b4-ba27-abec11e33cc2-7981045481760" class="full-unstyled-link" aria-labelledby="CardLink-template--16816114368800__01eef60b-2b83-48b4-ba27-abec11e33cc2-7981045481760 Badge-template--16816114368800__01eef60b-2b83-48b4-ba27-abec11e33cc2-7981045481760" > ${recommendedProduct.productSuggestion.title} </a> </h3> <div class="card-information"> <span class="visually-hidden">Vendor:</span> <div class="caption-with-letter-spacing light"> ${recommendedProduct.productSuggestion.vendor} </div> <span class="caption-large light"></span> <div class="price"> <div class="price__container"> <div class="price__regular"> <span class="visually-hidden visually-hidden--inline" >Regular price</span > <span class="price-item price-item--regular"> ${recommendedProduct.productSuggestion.variants.edges[0].node.price} </span> </div> <div class="price__sale"> <span class="visually-hidden visually-hidden--inline" >Regular price</span > <span> <s class="price-item price-item--regular"> </s> </span ><span class="visually-hidden visually-hidden--inline" >Sale price</span > <span class="price-item price-item--sale price-item--last"> ${recommendedProduct.productSuggestion.variants.edges[0].node.price} </span> </div> <small class="unit-price caption hidden"> <span class="visually-hidden">Unit price</span> <span class="price-item price-item--last"> <span></span> <span aria-hidden="true">/</span> <span class="visually-hidden">&nbsp;per&nbsp;</span> <span> </span> </span> </small> </div> </div> </div> </div> <div class="quick-add no-js-hidden"> <product-form ><form method="post" action="/cart/add" id="quick-add-template--16816114368800__01eef60b-2b83-48b4-ba27-abec11e33cc27981045481760" accept-charset="UTF-8" class="form" enctype="multipart/form-data" novalidate="novalidate" data-type="add-to-cart-form" > <input type="hidden" name="form_type" value="product" /><input type="hidden" name="utf8" value="✓" /><input type="hidden" name="id" value="43697096229152" /> <button id="quick-add-template--16816114368800__01eef60b-2b83-48b4-ba27-abec11e33cc27981045481760-submit" type="submit" name="add" class="quick-add__submit button button--full-width button--secondary" aria-haspopup="dialog" aria-labelledby="quick-add-template--16816114368800__01eef60b-2b83-48b4-ba27-abec11e33cc27981045481760-submit title-template--16816114368800__01eef60b-2b83-48b4-ba27-abec11e33cc2-7981045481760" aria-live="polite" data-sold-out-message="true" > <span>Add to cart </span> <span class="sold-out-message hidden"> Sold out </span> <div class="loading-overlay__spinner hidden"> <svg aria-hidden="true" focusable="false" role="presentation" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg" > <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30" ></circle> </svg> </div> </button></form ></product-form> </div> <div class="card__badge bottom left"></div> </div> </div> </div></li>`;
+    recommendedProductHTML += `<div class="items-container"> <div class="item" id="item${i}"> <div class="diamond-container"> <div class="diamond"> <div class="diamond-wrapper"> <div class="diamond-content"> £ ${recommendedProduct.productSuggestion.variants.edges[0].node.price} </div> </div> </div> </div> <div class="item-wrapper"> <div class="content-wrapper"> <div class="img-container"> <div class="bg-square"></div> <img class="item-img" src="${imgUrl}" /> </div> <div class="content-text"> <div class="item-name"> ${recommendedProduct.productSuggestion.title} </div> <div class="item-subtext-container"> <span class="item-subtext subtext-mfr" >${recommendedProduct.productSuggestion.vendor}</span > </div> </div> </div> <div class="view-more-btn" id="view${i}" onClick="viewMore(${i})"> View More <span class="view-symbol">+</span> </div> <div class="item-details-container"> <div class="details-content-wrapper"> <div class="detail"> <span class="detail-title">Item | </span> <span class="detail-text detail-name" >${recommendedProduct.productSuggestion.title}</span > </div> <div class="detail"> <span class="detail-title">MFR | </span> <span class="detail-text mfr-name" >${recommendedProduct.productSuggestion.vendor}</span > </div> <div class="detail"> <span class="detail-title">Price | </span> <span class="detail-text detail-price" >£${recommendedProduct.productSuggestion.variants.edges[0].node.price}</span > </div> <div class="detail detail-desc"> <div class="detail-title">Description</div> <div class="detail-description"> ${recommendedProduct.productSuggestion.body} </div> <a href="/products/${productLink}" target="_blank"> <div class="detail-manual-link"> <div class="manual-icon-container"> <svg class="manual-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 465 465" style="enable-background: new 0 0 465 465" xml:space="preserve" width="512px" height="512px" > <g> <path d="M240,356.071V132.12c0-4.143-3.357-7.5-7.5-7.5s-7.5,3.357-7.5,7.5v223.951c0,4.143,3.357,7.5,7.5,7.5 S240,360.214,240,356.071z" fill="#f1f1f1" /> <path d="M457.5,75.782c-15.856,0-35.614-6.842-56.533-14.085c-26.492-9.174-56.521-19.571-87.663-19.571 c-36.035,0-58.019,15.791-70.115,29.038c-4.524,4.956-8.03,9.922-10.688,14.327c-2.658-4.405-6.164-9.371-10.688-14.327 c-12.097-13.247-34.08-29.038-70.115-29.038c-31.143,0-61.171,10.397-87.663,19.571C43.114,68.94,23.356,75.782,7.5,75.782 c-4.143,0-7.5,3.357-7.5,7.5v302.092c0,4.143,3.357,7.5,7.5,7.5c18.38,0,39.297-7.243,61.441-14.911 c25.375-8.786,54.136-18.745,82.755-18.745c24.54,0,44.403,8.126,59.038,24.152c2.792,3.058,7.537,3.273,10.596,0.48 s3.273-7.537,0.48-10.596c-12.097-13.246-34.08-29.037-70.114-29.037c-31.143,0-61.171,10.397-87.663,19.571 C46.298,369.931,29.396,375.782,15,377.422V90.41c16.491-1.571,34.755-7.896,53.941-14.539 c25.375-8.786,54.136-18.745,82.755-18.745c57.881,0,73.025,45.962,73.634,47.894c0.968,3.148,3.876,5.298,7.17,5.298 s6.202-2.149,7.17-5.298c0.146-0.479,15.383-47.894,73.634-47.894c28.619,0,57.38,9.959,82.755,18.745 c19.187,6.644,37.45,12.968,53.941,14.539v287.012c-14.396-1.64-31.298-7.491-49.033-13.633 c-26.492-9.174-56.521-19.571-87.663-19.571c-36.036,0-58.02,15.791-70.115,29.038c-2.793,3.06-2.578,7.803,0.48,10.596 c3.06,2.793,7.804,2.578,10.596-0.48c14.635-16.027,34.498-24.153,59.039-24.153c28.619,0,57.38,9.959,82.755,18.745 c22.145,7.668,43.062,14.911,61.441,14.911c4.143,0,7.5-3.357,7.5-7.5V83.282C465,79.14,461.643,75.782,457.5,75.782z" fill="#f1f1f1" /> <path d="M457.5,407.874c-15.856,0-35.614-6.842-56.533-14.085c-26.492-9.174-56.521-19.571-87.663-19.571 c-33.843,0-55.291,13.928-67.796,26.596l-26.017-0.001c-12.505-12.668-33.954-26.595-67.795-26.595 c-31.143,0-61.171,10.397-87.663,19.571c-20.919,7.243-40.677,14.085-56.533,14.085c-4.143,0-7.5,3.357-7.5,7.5s3.357,7.5,7.5,7.5 c18.38,0,39.297-7.243,61.441-14.911c25.375-8.786,54.136-18.745,82.755-18.745c24.54,0,44.403,8.126,59.038,24.152 c1.421,1.556,3.431,2.442,5.538,2.442l32.454,0.001c2.107,0,4.117-0.887,5.538-2.442c14.635-16.027,34.498-24.153,59.039-24.153 c28.619,0,57.38,9.959,82.755,18.745c22.145,7.668,43.062,14.911,61.441,14.911c4.143,0,7.5-3.357,7.5-7.5 S461.643,407.874,457.5,407.874z" fill="#f1f1f1" /> </g> </svg> </div> <div class="manual-link-text">View Full Product Page</div> </div> </a> </div> </div> </div> </div> </div></div>`;
   });
 
-  recommendedProductHTML += "</ul></slider-component></div></div>";
+  recommendedProductHTML += "</div></div>";
   document.getElementById("questions").innerHTML = recommendedProductHTML;
 
   submitButton.classList.add("hidden");
@@ -174,8 +173,6 @@ function selectAnswer() {
       return checkbox.checked;
     })
     .map((checked_checkbox) => checked_checkbox.value);
-
-  console.log("a", selectedAnswers);
 }
 
 fetchQuiz(QUIZ_ID).then(async (quiz) => {
@@ -194,6 +191,8 @@ fetchQuiz(QUIZ_ID).then(async (quiz) => {
           this.body.innerHTML = quiz.body;
           this.questions = this.querySelector(".product-quiz__questions");
 
+          const submit_btn = this.querySelector("#quiz-submit");
+          console.log(submit_btn);
           // const questionContainer = this.querySelector(
           //   ".product-quiz__question"
           // );
@@ -208,7 +207,7 @@ fetchQuiz(QUIZ_ID).then(async (quiz) => {
           for (let i = 1; i <= questions.length; i++) {
             slideDots.insertAdjacentHTML(
               "beforeend",
-              `<span class="dot" onclick="currentSlide(${i})"></span>`
+              `<span class="dot slide-${i}" onclick="currentSlide(${i})"></span>`
             );
           }
 
@@ -223,7 +222,7 @@ fetchQuiz(QUIZ_ID).then(async (quiz) => {
             );
             clonedDiv.insertAdjacentHTML(
               "beforeend",
-              '<div class="product-quiz__question-answers"></div>'
+              `<div class="product-quiz__question-answers"></div><div class="quiz-navigation"><a class="prev" onclick="plusSlides(-1)">&#10094;<span>Back</span></a> <a class="next" onclick="plusSlides(1)"><span>Next</span>&#10095;</a></div>`
             );
             this.questions.appendChild(clonedDiv);
 
@@ -262,7 +261,7 @@ fetchQuiz(QUIZ_ID).then(async (quiz) => {
             });
           });
           this.questions.removeChild(this.questions.children[0]);
-          this.form.addEventListener("submit", onSubmitHandler);
+          submit_btn.addEventListener("click", onSubmitHandler);
         }
       }
     );
