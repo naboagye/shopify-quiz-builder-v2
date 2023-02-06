@@ -191,8 +191,8 @@ fetchQuiz(QUIZ_ID).then(async (quiz) => {
           this.body.innerHTML = quiz.body;
           this.questions = this.querySelector(".product-quiz__questions");
 
-          const submit_btn = this.querySelector("#quiz-submit");
-          console.log(submit_btn);
+          // const submit_btn = this.querySelector("#quiz-submit");
+          // console.log(submit_btn);
           // const questionContainer = this.querySelector(
           //   ".product-quiz__question"
           // );
@@ -261,7 +261,7 @@ fetchQuiz(QUIZ_ID).then(async (quiz) => {
             });
           });
           this.questions.removeChild(this.questions.children[0]);
-          submit_btn.addEventListener("click", onSubmitHandler);
+          this.form.addEventListener("submit", onSubmitHandler);
         }
       }
     );

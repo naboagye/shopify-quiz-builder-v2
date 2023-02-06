@@ -45,7 +45,7 @@ function showSlides(n) {
   if (slideIndex == slides.length){
     next_btn.style.display = "none"
     btns_container.innerHTML = 
-              `<a class="prev slide-${i}" onclick="plusSlides(-1)">&#10094;<span>Back</span></a><a id="quiz-submit" name="quiz-submit" type="submit" class="next "><span>Show results</span></a><div class="product-quiz__email-container">
+              `<a class="prev slide-${i}" onclick="plusSlides(-1)">&#10094;<span>Back</span></a><button id="quiz-submit" name="quiz-submit" type="submit" class="next "><span>Show results</span></button><div class="product-quiz__email-container">
                   <label for="email">Enter your email to complete quiz</label><br>
                   <input type="email" id="product-quiz__email" name="email" required="required" style="font-size: 16px; height: 32px"><br><br>
                 </div>`
@@ -133,7 +133,6 @@ function viewMore(pos) {
               </div>
           </div>
         </div>
-      <hr class="product-quiz__submit-hr" />
     </form>
   </product-quiz>
 </div>
