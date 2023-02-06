@@ -222,7 +222,7 @@ fetchQuiz(QUIZ_ID).then(async (quiz) => {
             );
             clonedDiv.insertAdjacentHTML(
               "beforeend",
-              `<div class="product-quiz__question-answers"></div><div class="quiz-navigation"><a class="prev" onclick="plusSlides(-1)">&#10094;<span>Back</span></a> <a class="next" onclick="plusSlides(1)"><span>Next</span>&#10095;</a></div>`
+              `<div class="product-quiz__question-answers"></div><div class="quiz-navigation"><div class="quiz-nav-btns"><a class="prev" onclick="plusSlides(-1)">&#10094;<span>Back</span></a> <a class="next" onclick="plusSlides(1)"><span>Next</span>&#10095;</a></div></div>`
             );
             this.questions.appendChild(clonedDiv);
 

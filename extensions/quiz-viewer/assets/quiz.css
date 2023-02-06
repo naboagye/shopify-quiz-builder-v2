@@ -97,6 +97,15 @@
   background-image: url("hair-bg.jpg");
 }
 
+.product-quiz__email-container {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: 80px;
+  margin-bottom: -80px;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -119,8 +128,28 @@
   height: inherit;
 }
 
+/* Hide the images by default */
+.start {
+  background-image: url("nude-bg.jpg");
+  background-size: cover;
+  justify-content: center;
+  align-items: center;
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+}
+
 /* Next & previous buttons */
 .quiz-navigation {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  gap: 10px;
+  flex-direction: column;
+}
+
+.quiz-nav-btns {
   display: flex;
   align-items: center;
   text-align: center;
@@ -231,8 +260,9 @@ body {
 }
 
 .items-container {
-  width: 95vw;
+  /* width: 95vw; */
   overflow-x: hidden;
+  /* margin: 0 auto; */
   margin-top: 20px;
 }
 

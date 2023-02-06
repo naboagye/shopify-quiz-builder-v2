@@ -45,10 +45,10 @@ function showSlides(n) {
   if (slideIndex == slides.length){
     next_btn.style.display = "none"
     btns_container.innerHTML = 
-              `<a class="prev slide-${i}" onclick="plusSlides(-1)">&#10094;<span>Back</span></a><button id="quiz-submit" name="quiz-submit" type="submit" class="next "><span>Show results</span></button><div class="product-quiz__email-container">
+              `<div class="product-quiz__email-container">
                   <label for="email">Enter your email to complete quiz</label><br>
                   <input type="email" id="product-quiz__email" name="email" required="required" style="font-size: 16px; height: 32px"><br><br>
-                </div>`
+                </div><div class="quiz-nav-btns"><a class="prev slide-${i}" onclick="plusSlides(-1)">&#10094;<span>Back</span></a><button id="quiz-submit" name="quiz-submit" type="submit" class="next "><span>Show results</span></button></div>`
               
   }
 
@@ -97,13 +97,8 @@ function viewMore(pos) {
 
 <div>
   <product-quiz class="quiz">
-    <h1 class="main-page-title page-title h0 product-quiz__title">
+    
     <input type="hidden" id="quizid" value="{{ quiz_id }}" />
-    </h1>
-    <div class="product-quiz__body">
-      <span>
-      </span>
-    </div>
     <div>
     <form class="form" id="form">
       <div class="slideshow-container" id="questions">
@@ -121,6 +116,11 @@ function viewMore(pos) {
             
               </div>
           <div class="start" style="text-align:center">
+          <h1 class="main-page-title page-title h0 product-quiz__title"></h1>
+          <div class="product-quiz__body">
+          <span>
+          </span>
+          </div>
             <span class="product-quiz__question-answer">
               </span>
               <h2 class="product-quiz__title"></h2>
