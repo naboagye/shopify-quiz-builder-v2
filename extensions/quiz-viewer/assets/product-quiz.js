@@ -1,6 +1,7 @@
 // initialize an API client object
 // const api = new Gadget();
 // const QUIZ_ID = 1; // <- UPDATE ME WITH QUIZ ID FROM GADGET
+
 const QUIZ_ID = document.getElementById("quizid").value;
 
 // let api;
@@ -110,14 +111,14 @@ async function saveSelections(email, recommendedProducts) {
   });
 }
 
-async function onSubmitHandler(evt) {
+async function onSubmitHandler(evt, quiz_title) {
   evt.preventDefault();
   selectAnswer();
 
   const email = document.getElementById("product-quiz__email").value;
 
-  const submitButton = this.querySelector(".product-quiz__submit");
-  submitButton.classList.add("disabled");
+  // const submitButton = this.querySelector(".product-quiz__submit");
+  // submitButton.classList.add("disabled");
 
   const recommendedProducts = await fetchRecommendedProducts(selectedAnswers);
 
@@ -125,7 +126,7 @@ async function onSubmitHandler(evt) {
   await saveSelections(email, recommendedProducts);
 
   // display recommendations
-  let recommendedProductHTML = `<div><h2>Based on your selections, we recommend the following products</h2><div style='display: flex; overflow: auto'>`;
+  let recommendedProductHTML = `<div><h2 style="padding: 5px;">Based on your selections, we recommend the following products</h2><div style='display: flex; overflow: auto'>`;
 
   recommendedProducts.forEach((result, i) => {
     const { recommendedProduct } = result;
@@ -142,11 +143,83 @@ async function onSubmitHandler(evt) {
   });
 
   recommendedProductHTML += "</div></div>";
-  document.getElementById("questions").innerHTML = recommendedProductHTML;
+  document.getElementById("questions").style.height = "15vh";
+  document.getElementById(
+    "questions"
+  ).innerHTML = `<div class="quiz-end"><h2 style="margin-bottom: 0;">YOUR ${quiz_title.toUpperCase()} RESULTS</h2><a class="retake-btn" href="javascript:location.reload();" class="retake-quiz"> START OVER </a></div>`;
+  document.getElementById("results").innerHTML = recommendedProductHTML;
 
-  submitButton.classList.add("hidden");
-  this.querySelector(".product-quiz__submit-hr").classList.add("hidden");
+  // submitButton.classList.add("hidden");
+  // this.querySelector(".product-quiz__submit-hr").classList.add("hidden");
   this.querySelector(".product-quiz__email-container").classList.add("hidden");
+}
+
+function plusSlides(n) {
+  showSlides((slideIndex += n));
+}
+
+function currentSlide(n) {
+  const s = document.getElementsByClassName("start");
+  if ((s[0].style.display = "flex")) {
+    s[0].style.display = "none";
+  }
+  showSlides((slideIndex = n));
+}
+
+function showSlides(n) {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+
+  if (n > slides.length) {
+    slideIndex = 1;
+  }
+  if (n < 1) {
+    slideIndex = slides.length;
+  }
+  for (i = 0; i < slides.length; i++) {
+    slides[i].classList.remove("active");
+  }
+
+  let dots = document.getElementsByClassName("dot slide-" + slideIndex);
+
+  for (i = 0; i < dots.length; i++) {
+    dots[i].classList.remove("active");
+  }
+  slides[slideIndex - 1].classList.add("active");
+  dots[slideIndex - 1].classList.add("active");
+}
+
+function handleClick() {
+  currentSlide(1);
+  const s = document.getElementsByClassName("start");
+  s[0].style.display = "none";
+}
+
+function chkcontrol(j, q, limit) {
+  selectAnswer();
+  var total = 0;
+  var checkboxes = document.getElementsByName("ckb_" + q);
+  for (var i = 0; i < checkboxes.length; i++) {
+    if (checkboxes[i].checked) {
+      total = total + 1;
+    }
+    if (total > limit) {
+      checkboxes[j].checked = false;
+      return false;
+    }
+  }
+}
+
+function viewMore(pos) {
+  var item = document.getElementById("item" + pos);
+  var btn = document.getElementById("view" + pos);
+  if (item && item.classList.contains("active") == false) {
+    item.classList.add("active");
+    btn.innerHTML = 'VIEW LESS <span class="view-symbol">-</span>';
+  } else if (item && item.classList.contains("active")) {
+    item.classList.remove("active");
+    btn.innerHTML = 'VIEW MORE <span class="view-symbol">+</span>';
+  }
 }
 
 let answerLimit = [3, 1, 1, 1, 1, 3, 1, 1];
@@ -184,6 +257,8 @@ fetchQuiz(QUIZ_ID).then(async (quiz) => {
       class ProductQuiz extends HTMLElement {
         constructor() {
           super();
+          this.loader = this.querySelector(".loader");
+          this.loader.classList.add("hide");
           this.form = this.querySelector("form");
           this.heading = this.querySelector(".product-quiz__title");
           this.heading.innerHTML = quiz.title;
@@ -191,11 +266,11 @@ fetchQuiz(QUIZ_ID).then(async (quiz) => {
           this.body.innerHTML = quiz.body;
           this.questions = this.querySelector(".product-quiz__questions");
 
-          // const submit_btn = this.querySelector("#quiz-submit");
-          // console.log(submit_btn);
-          // const questionContainer = this.querySelector(
-          //   ".product-quiz__question"
-          // );
+          this.body.insertAdjacentHTML(
+            "beforeend",
+            `<br><button onclick="handleClick()" class="product-quiz__submit button button--secondary">START QUIZ</button>`
+          );
+
           const answerContainer = this.querySelector(
             ".product-quiz__question-answer"
           );
@@ -220,10 +295,22 @@ fetchQuiz(QUIZ_ID).then(async (quiz) => {
                 question.node.text +
                 `</h1></div>`
             );
-            clonedDiv.insertAdjacentHTML(
-              "beforeend",
-              `<div class="product-quiz__question-answers"></div><div class="quiz-navigation"><div class="quiz-nav-btns"><a class="prev" onclick="plusSlides(-1)">&#10094;<span>Back</span></a> <a class="next" onclick="plusSlides(1)"><span>Next</span>&#10095;</a></div></div>`
-            );
+
+            if (i + 1 == questions.length) {
+              clonedDiv.insertAdjacentHTML(
+                "beforeend",
+                `<div class="product-quiz__question-answers"></div><div class="quiz-navigation"><div class="product-quiz__email-container">
+                <label for="email">Enter your email to complete quiz</label><br>
+                <input type="email" id="product-quiz__email" name="email" style="font-size: 16px; height: 32px"><br><br>
+              </div><div class="quiz-nav-btns"><div class="figure-prev"><a class="prev slide-${i}" onclick="plusSlides(-1)">&#10094;<span>Back</span></a><a class="prev-hover" onclick="plusSlides(-1)">&#10094;<span>Back</span></a></div><button id="quiz-submit" name="quiz-submit" type="submit" class="product-quiz__submit button button--secondary"><span>Show results</span></button></div>`
+              );
+            } else {
+              clonedDiv.insertAdjacentHTML(
+                "beforeend",
+                `<div class="product-quiz__question-answers"></div><div class="quiz-navigation"><div class="quiz-nav-btns"><div class="figure-prev"><a class="prev" onclick="plusSlides(-1)">&#10094;<span>Back</span></a><a class="prev-hover" onclick="plusSlides(-1)">&#10094;<span>Back</span></a></div><div class="figure-next"><a class="next" onclick="plusSlides(1)"><span>Next</span>&#10095;</a><a class="next-hover" onclick="plusSlides(1)"><span>Next</span>&#10095;</a></div></div></div>`
+              );
+            }
+
             this.questions.appendChild(clonedDiv);
 
             const answers = question.node.answers.edges;
@@ -231,28 +318,17 @@ fetchQuiz(QUIZ_ID).then(async (quiz) => {
             answers.forEach((answer, j) => {
               const clonedSpan = answerContainer.cloneNode(true);
               clonedSpan.id = "answer_" + i + "_" + j;
-              // clonedSpan.insertAdjacentHTML(
-              //   "beforeend",
-              //   `<span><button class="button answer" id="${
-              //     clonedSpan.id
-              //   }" onClick=(selectAnswer(${
-              //     answer.node.id
-              //   },"${encodeURIComponent(answer.node.text)}"))>${
-              //     answer.node.text
-              //   }</button></span>`
-              // );
               clonedSpan.insertAdjacentHTML(
                 "beforeend",
-                `<div class = "answers_checkbox answer cat action q${i}_answer" id="${clonedSpan.id}"  >
-                  <label>
-                    <input name='ckb_${i}' onclick='chkcontrol(${j},${answer.node.id}, ${i}, ${limit})' class="answer_checkbox" type="checkbox" value=${answer.node.id}>
+                `<div class = "answers_checkbox answer cat action q${i}_answer" id="${clonedSpan.id}" onclick='chkcontrol(${j},${answer.node.id}, ${i}, ${limit})'>
+                  <input name='ckb_${i}' id="checkbox_${clonedSpan.id}" class="answer_checkbox" type="checkbox" value=${answer.node.id}>
+                  <label class="label-for-check" for="checkbox_${clonedSpan.id}">
                       <span>
                         <a>${answer.node.text}</a>
                       </span>
                   </label>
-                <div>
-                <br/>
-                <br/>`
+                </div>
+`
               );
               // this.querySelector(`.product-quiz__answers_${i}`).appendChild(
               //   clonedSpan
@@ -261,7 +337,11 @@ fetchQuiz(QUIZ_ID).then(async (quiz) => {
             });
           });
           this.questions.removeChild(this.questions.children[0]);
-          this.form.addEventListener("submit", onSubmitHandler);
+          this.form.addEventListener("submit", function (event) {
+            onSubmitHandler(event, quiz.title);
+          });
+          let slideIndex = 1;
+          showSlides(slideIndex);
         }
       }
     );

@@ -1,4 +1,4 @@
-{% render "quiz-page" with block.settings.quiz_id as quiz_id %}
+{% render "quiz-page", quiz_id: block.settings.quiz_id, quiz_bg_img: block.settings.quiz_bg_img  %}
 {% schema %}
   {
     "name": "Quiz",
@@ -10,7 +10,12 @@
         "type": "text",
         "id": "quiz_id",
         "label": "Quiz ID"
-       }
+       },
+       {
+        "type": "image_picker",
+        "id": "quiz_bg_img",
+        "label": "Quiz Background Image"
+      }
     ]
   }
 {% endschema %}

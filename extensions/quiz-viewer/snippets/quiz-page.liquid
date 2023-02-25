@@ -1,105 +1,12 @@
 <noscript>{{ 'section-main-page.css' | asset_url | stylesheet_tag }}</noscript>
 <noscript>{{ 'component-rte.css' | asset_url | stylesheet_tag }}</noscript>
-<script>
-let slideIndex = 1;
-showSlides(slideIndex);
-
-function plusSlides(n) {
-  showSlides(slideIndex += n);
-}
-
-function currentSlide(n) {
-  const s = document.getElementsByClassName("start");
-  if (s[0].style.display = "flex"){
-    s[0].style.display = "none"; 
-  }
-  showSlides(slideIndex = n);
-}
-
-function showSlides(n) {
-  let i;
-  let slides = document.getElementsByClassName("mySlides");
-  
-  if (n > slides.length) {slideIndex = 1}    
-  if (n < 1) {slideIndex = slides.length}
-  for (i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";  
-  }
-
-  let dots = document.getElementsByClassName("dot slide-"+slideIndex);
-
-  for (i = 0; i < dots.length; i++) {
-    dots[i].classList.remove("active")
-  }
-  slides[slideIndex-1].style.display = "flex";
-  slides[slideIndex-1].style.flexDirection = "column";  
-  dots[slideIndex-1].classList.add("active")
-
-  let btns_container = document.getElementsByClassName("quiz-navigation")[slideIndex-1]
-  
-
-  let next_btn = document.getElementsByClassName("next")[slideIndex-1]
-  console.log(slideIndex)
-  if (slideIndex == slides.length){
-    next_btn.style.display = "none"
-    btns_container.innerHTML = 
-              `<div class="product-quiz__email-container">
-                  <label for="email">Enter your email to complete quiz</label><br>
-                  <input type="email" id="product-quiz__email" name="email" required="required" style="font-size: 16px; height: 32px"><br><br>
-                </div><div class="quiz-nav-btns"><a class="prev slide-${i}" onclick="plusSlides(-1)">&#10094;<span>Back</span></a><button id="quiz-submit" name="quiz-submit" type="submit" class="product-quiz__submit button button--secondary"><span>Show results</span></button></div>`
-              
-  }
-
-  let back_btn = document.getElementsByClassName("prev slide-"+(slideIndex-1))[0]
-  if (slideIndex == 1){
-    back_btn.style.display = "none"
-  }
-
-}
-
-function handleClick(){
-  currentSlide(1)
-  const s = document.getElementsByClassName("start");
-  s[0].style.display = "none"; 
-}
-
-function chkcontrol(j, answer_id, q, limit) {
-  selectAnswer()
-  var total=0;
-  var checkboxes = document.getElementsByName("ckb_" + q)
-  for(var i=0; i < checkboxes.length; i++){
-    if(checkboxes[i].checked){
-      total =total +1;
-    }
-    if(total > limit){
-      checkboxes[j].checked = false ;
-      return false;
-    }
-  }
-}
-
-function viewMore(pos) {
-  var item = document.getElementById("item"+ pos)
-  var btn = document.getElementById("view"+pos)
-  if (item && item.classList.contains("active") == false) {
-    item.classList.add("active")
-    btn.innerHTML = 'VIEW LESS <span class="view-symbol">-</span>';
-  } else if(item && item.classList.contains("active")) {
-    item.classList.remove("active")
-    btn.innerHTML = 'VIEW MORE <span class="view-symbol">+</span>';
-  }
-
-}
-
-</script>
 
 <div>
   <product-quiz class="quiz">
-    
     <input type="hidden" id="quizid" value="{{ quiz_id }}" />
     <div>
     <form class="quiz-form" id="form">
-      <div class="slideshow-container" id="questions">
+      <div class="slideshow-container" id="questions" style="background-image: url({{ quiz_bg_img | image_url }});">
           <div class="mySlides">
             <span class="product-quiz__question-answer">
               </span>
@@ -114,23 +21,25 @@ function viewMore(pos) {
             
               </div>
           <div class="start" style="text-align:center">
-          <h1 class="main-page-title page-title h0 product-quiz__title"></h1>
-          <div class="product-quiz__body">
-          <span>
-          </span>
-          </div>
+            <h1 class="main-page-title page-title h0 product-quiz__title"></h1>
+            <div class="product-quiz__body">
+            <span>
+            </span>
+            </div>
             <span class="product-quiz__question-answer">
               </span>
               <h2 class="product-quiz__title"></h2>
               <div class="product-quiz__body">
                 <span>
-                  <div id="loading" style="display:none">Loading...</div>
+                  <div class="loader">
+                  </div>
                 </span>
-                <br>
-                <button onclick="handleClick()" class="product-quiz__submit button button--secondary">START QUIZ</button>
+                
+                
               </div>
           </div>
-        </div>
+      </div>
+      <div id="results"></div>
     </form>
   </product-quiz>
 </div>
