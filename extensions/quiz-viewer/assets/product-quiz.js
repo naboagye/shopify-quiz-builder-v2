@@ -291,7 +291,7 @@ fetchQuiz(QUIZ_ID).then(async (quiz) => {
             clonedDiv.id = "question_" + i;
             clonedDiv.insertAdjacentHTML(
               "beforeend",
-              "<br /><div class='question-text'><h1>" +
+              "<br /><div class='question-text'><h1 class='question-text'>" +
                 question.node.text +
                 `</h1></div>`
             );
@@ -300,7 +300,7 @@ fetchQuiz(QUIZ_ID).then(async (quiz) => {
               clonedDiv.insertAdjacentHTML(
                 "beforeend",
                 `<div class="product-quiz__question-answers"></div><div class="quiz-navigation"><div class="product-quiz__email-container">
-                <label for="email">Enter your email to complete quiz</label><br>
+                <label class="question-text" for="email">Enter your email to complete quiz</label><br>
                 <input type="email" id="product-quiz__email" name="email" style="font-size: 16px; height: 32px"><br><br>
               </div><div class="quiz-nav-btns"><div class="figure-prev"><a class="prev slide-${i}" onclick="plusSlides(-1)">&#10094;<span>Back</span></a><a class="prev-hover" onclick="plusSlides(-1)">&#10094;<span>Back</span></a></div><button id="quiz-submit" name="quiz-submit" type="submit" class="product-quiz__submit button button--secondary"><span>Show results</span></button></div>`
               );

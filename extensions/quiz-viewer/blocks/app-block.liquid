@@ -1,4 +1,10 @@
-{% render "quiz-page", quiz_id: block.settings.quiz_id, quiz_bg_img: block.settings.quiz_bg_img  %}
+{% render "quiz-page", 
+  quiz_id: block.settings.quiz_id, 
+  quiz_bg_img: block.settings.quiz_bg_img, 
+  quiz_primary_col: block.settings.quiz_primary_col,
+  quiz_secondary_col: block.settings.quiz_secondary_col,
+  quiz_text_col: block.settings.quiz_text_col
+%}
 {% schema %}
   {
     "name": "Quiz",
@@ -6,15 +12,33 @@
     "stylesheet": "quiz.css",
     "javascript": "product-quiz.js",
     "settings": [
-        {
+      {
         "type": "text",
         "id": "quiz_id",
         "label": "Quiz ID"
-       },
-       {
+      },
+      {
         "type": "image_picker",
         "id": "quiz_bg_img",
         "label": "Quiz Background Image"
+      },
+      {
+        "type": "color",
+        "id": "quiz_primary_col",
+        "label": "Quiz Button Text Colour",
+        "default": "#d4b195"
+      },
+      {
+        "type": "color",
+        "id": "quiz_secondary_col",
+        "label": "Quiz Button Colour",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "quiz_text_col",
+        "label": "Quiz Text Colour",
+        "default": "#000000"
       }
     ]
   }

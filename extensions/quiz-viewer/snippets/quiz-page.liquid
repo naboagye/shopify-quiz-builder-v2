@@ -1,6 +1,98 @@
 <noscript>{{ 'section-main-page.css' | asset_url | stylesheet_tag }}</noscript>
 <noscript>{{ 'component-rte.css' | asset_url | stylesheet_tag }}</noscript>
 
+<style>
+  .label-for-check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: {{ quiz_secondary_col }};
+    color: {{ quiz_primary_col }};
+    cursor: pointer;
+  }
+
+  /* This will declare how a selected input will look giving generic properties */
+.answers_checkbox input[type="checkbox"]:checked + .label-for-check {
+  background-color: {{ quiz_primary_col }};
+  color: {{ quiz_secondary_col }};
+}
+
+.cat:hover label {
+  background-color: {{ quiz_primary_col }};
+  color: {{ quiz_secondary_col }};
+}
+
+.selected-answer {
+  background-color: {{ quiz_primary_col }} !important;
+  color: {{ quiz_secondary_col }} !important;
+}
+
+.figure-prev a.prev-hover,
+.figure-next a.next-hover {
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  object-fit: contain;
+  width: 100px;
+  height: 40px;
+  background-color: {{ quiz_primary_col }};
+  color: {{ quiz_secondary_col }};
+  opacity: 0;
+  transition: opacity 0.2s;
+  line-height: 40px;
+  margin-top: 30px;
+  font-size: 12px;
+  border-radius: 3px 3px 3px 3px;
+  user-select: none;
+}
+
+.figure-prev a.prev,
+.figure-next a.next {
+  cursor: pointer;
+  top: 50%;
+  width: 100px;
+  height: 40px;
+  color: {{ quiz_primary_col }};
+  background-color: {{ quiz_secondary_col }};
+  line-height: 40px;
+  margin-top: 30px;
+  font-size: 12px;
+  border-radius: 3px 3px 3px 3px;
+  user-select: none;
+}
+
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid {{ quiz_primary_col }};
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+.question-text {
+  text-align: center;
+  padding: 10px;
+  color: {{ quiz_text_col }}
+}
+
+.product-quiz__submit {
+  cursor: pointer;
+  color: {{ quiz_primary_col }};
+  background-color: {{ quiz_secondary_col }};
+  margin-top: 30px;
+  font-size: 12px;
+  border-radius: 3px 3px 3px 3px;
+  user-select: none;
+}
+
+</style>
+
 <div>
   <product-quiz class="quiz">
     <input type="hidden" id="quizid" value="{{ quiz_id }}" />
@@ -21,9 +113,9 @@
             
               </div>
           <div class="start" style="text-align:center">
-            <h1 class="main-page-title page-title h0 product-quiz__title"></h1>
+            <h1 class="main-page-title page-title h0 product-quiz__title question-text"></h1>
             <div class="product-quiz__body">
-            <span>
+            <span class="question-text">
             </span>
             </div>
             <span class="product-quiz__question-answer">
