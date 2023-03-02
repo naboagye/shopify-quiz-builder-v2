@@ -75,7 +75,7 @@
   animation: spin 2s linear infinite;
 }
 
-.question-text {
+.question-text h1 {
   text-align: center;
   padding: 10px;
   color: {{ quiz_text_col }}
@@ -96,40 +96,34 @@
 <div>
   <product-quiz class="quiz">
     <input type="hidden" id="quizid" value="{{ quiz_id }}" />
-    <div>
     <form class="quiz-form" id="form">
       <div class="slideshow-container" id="questions" style="background-image: url({{ quiz_bg_img | image_url }});">
-          <div class="mySlides">
+        <div class="mySlides">
             <span class="product-quiz__question-answer">
-              </span>
+            </span>
             <!-- The dots/circles -->
             <div class="slide-dots" style="text-align:center">
             </div>
 
             <div class="product-body">
-
             </div>
-            
-            
-              </div>
-          <div class="start" style="text-align:center">
-            <h1 class="main-page-title page-title h0 product-quiz__title question-text"></h1>
-            <div class="product-quiz__body">
+        </div>
+        <div class="start" style="text-align:center">
+          <h1 class="main-page-title page-title h0 product-quiz__title question-text"></h1>
+          <div class="product-quiz__body">
             <span class="question-text">
             </span>
-            </div>
-            <span class="product-quiz__question-answer">
-              </span>
-              <h2 class="product-quiz__title"></h2>
-              <div class="product-quiz__body">
-                <span>
-                  <div class="loader">
-                  </div>
-                </span>
-                
-                
-              </div>
           </div>
+          <span class="product-quiz__question-answer">
+          </span>
+          <h2 class="product-quiz__title"></h2>
+          <div class="product-quiz__body">
+            <span>
+              <div class="loader">
+              </div>
+            </span>
+          </div>
+        </div>
       </div>
       <div id="results"></div>
     </form>
