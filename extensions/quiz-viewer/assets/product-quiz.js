@@ -320,7 +320,7 @@ fetchQuiz(QUIZ_ID).then(async (quiz) => {
               clonedSpan.id = "answer_" + i + "_" + j;
               clonedSpan.insertAdjacentHTML(
                 "beforeend",
-                `<div class = "answers_checkbox answer cat action q${i}_answer" id="${clonedSpan.id}" onclick='chkcontrol(${j},${answer.node.id}, ${i}, ${limit})'>
+                `<div class = "answers_checkbox answer cat action q${i}_answer" id="${clonedSpan.id}" onclick='chkcontrol(${j}, ${i}, ${limit})'>
                   <input name='ckb_${i}' id="checkbox_${clonedSpan.id}" class="answer_checkbox" type="checkbox" value=${answer.node.id}>
                   <label class="label-for-check" for="checkbox_${clonedSpan.id}">
                       <span>${answer.node.text}</span>
